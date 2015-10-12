@@ -2,29 +2,36 @@
 
 var webpack = require('webpack');
 var autoprefixer = require('autoprefixer');
+var path = require('path');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-module.exports {
-	entry: {
-		src: {
-
-		}
-	},
+module.exports = {
+	context: path.join(__dirname, '../src'),
+	entry: '../src/client/Main.react.es',
 
 	output: {
-
+		path: path.join(__dirname, '../bundle/'),
+        filename: 'bundle.js'
 	},
 
 	module: {
-		 preLoaders: [
-            {
-                test: /\.js$|.jsx$/,
-                exclude: /node_modules/,
-                loaders: ['eslint']
+        loaders: [
+            { 
+            	test: /\.es/, 
+            	loader: 'babel-loader?stage=0&optional=runtime' 
+            },
+            { 
+            	test: /\.(sass|scss)$/, 
+            	loader: ExtractTextPlugin.extract('style', 'css-loader?minimize!sass-loader') 
+            },
+            { 
+            	test: /\.css$/, 
+            	loader: ExtractTextPlugin.extract('style', 'css-loader?minimize') 
             }
-        ]	
-	},
+       ]
+    },
 
-	postcss: [
-        autoprefixer({ browsers: ['last 2 version'] }),
-    ],
-}
+    plugins: [
+        new ExtractTextPlugin('bundle.css')
+    ]
+};
