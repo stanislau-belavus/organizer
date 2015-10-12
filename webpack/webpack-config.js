@@ -9,9 +9,13 @@ module.exports = {
 	context: path.join(__dirname, '../src'),
 	entry: '../src/client/Main.react.es',
 
+    publicPath: 'http://localhost:8080/assets/',
+
 	output: {
 		path: path.join(__dirname, '../bundle/'),
-        filename: 'bundle.js'
+        filename: 'bundle.js',
+        chunkFilename: 'chunks.js',
+        publicPath: 'http://localhost:8080/assets/'
 	},
 
 	module: {
@@ -32,6 +36,8 @@ module.exports = {
     },
 
     plugins: [
-        new ExtractTextPlugin('bundle.css')
+        new ExtractTextPlugin('bundle.css'),
+
+        new webpack.HotModuleReplacementPlugin(),
     ]
 };
