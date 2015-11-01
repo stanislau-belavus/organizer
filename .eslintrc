@@ -1,0 +1,70 @@
+{
+    "parser": "babel-eslint",
+    "plugins": ["react", "smells"],
+
+    "env": {
+        "es6": true,
+        "browser": true,
+        "node": true,
+        "mocha": true,
+        "jquery": true
+    },
+
+    "globals": {
+        "expect": true,
+        "sinon": true
+    },
+
+    "rules": {
+        "quotes": [2, 'single'],
+        "eol-last": [1],
+        "no-mixed-requires": [0],
+        "no-underscore-dangle": [0],
+        "camelcase": [0],
+        "curly": [2, "multi-line"],
+        "no-constant-condition": [1],
+        "no-unused-expressions": [1],
+        "no-unused-vars": [2],
+        "no-new-func": [1],
+        "no-loop-func": [1],
+        "no-process-exit": [1],
+        "new-cap": [0],
+        "no-new": [0],
+        "max-statements": [1, 15],
+        "max-depth": [1, 2],
+        "complexity": [1, 5],
+        "no-extra-bind": [1],
+        "no-undef": 2,
+        "no-unused-vars": 2,
+
+        "react/display-name": 1,
+        "react/jsx-boolean-value": 1,
+        "jsx-quotes": 1,
+        "react/jsx-no-undef": 2,
+        "react/jsx-sort-props": 0,
+        "react/jsx-sort-prop-types": 1,
+        "react/jsx-uses-react": 2,
+        "react/jsx-uses-vars": 2,
+        "react/no-did-mount-set-state": 2,
+        "react/no-did-update-set-state": 2,
+        "react/no-multi-comp": 2,
+        "react/no-unknown-property": 2,
+        "react/prop-types": 1,
+        "react/react-in-jsx-scope": 2,
+        "react/self-closing-comp": 2,
+        "react/sort-comp": 1,
+        "react/wrap-multilines": 0,
+
+        "smells/no-switch": 1,
+        "smells/no-complex-switch-case": 1,
+        "smells/no-setinterval": 1,
+        "smells/no-this-assign": 1,
+        "smells/no-complex-string-concat": 1
+    },
+
+    "ecmaFeatures": {
+        "jsx": true,
+        "modules": true,
+        "blockBindings": true
+    }
+}

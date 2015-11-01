@@ -2,5 +2,5 @@
 
 module.exports = {
     extensions: ['', '.js', '.json', '.jsx', '.scss', '.css'],
-    modulesDirectories: ['node_modules', 'src']
+    modulesDirectories: ['node_modules', 'src', 'thirdparty']
 };
