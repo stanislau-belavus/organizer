@@ -1,40 +1,33 @@
 'use strict';
 
 import express from 'express';
-// import mongoMiddleware from './middleware/mongo';
-// import serverMiddleware from './middleware/server';
-// import logger from '../../logger';
+import mongoMiddleware from './middleware/mongo';
+import serverMiddleware from './middleware/server';
 import Promise from 'bluebird';
 
 const app = express();
-
 let isAppStarted = false;
 
-app.start = async function () {
+app.start = () => {
     if(!isAppStarted) {
         isAppStarted = true;
-        await Promise.all([
-            // serverMiddleware(app),
-            // mongoMiddleware(app)
-        ]);
-
-    } else {
-        await new Promise(function (resolve) {
-            resolve();
+        Promise.all([
+            serverMiddleware(app),
+            mongoMiddleware(app)
+        ]).then(() => {
+            if (process.send) {
+                process.send('online');
+            }
+        }, (error) => {
+            console.error(error);
         });
     }
-
-    if (process.send) {
-        process.send('online');
-    }
 };
-
-module.exports = app;
 
 if (!module.parent) {
     try {
         app.start();
-    } catch(e) {
-        // logger.error(e);
-    }
+    } catch(e) {}
 }
+
+export default app;
