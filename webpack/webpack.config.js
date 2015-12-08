@@ -39,6 +39,7 @@ module.exports = {
     devtool: NODE_ENV === 'development' ? "cheap-inline-module-source-map" : null,
 
     resolve: {
+        modulesDirectories: ['node_modules', 'src/client', 'src/server'],
         extensions: ['', '.jsx', '.js', '.es', '.json', 'css', 'scss']
     },
 

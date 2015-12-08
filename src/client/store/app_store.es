@@ -1,5 +1,5 @@
 import { createStore, combineReducers } from 'redux';
-import { routerReducer } from '../reducers/router_reducer';
+import { routerReducer } from 'reducers/router_reducer';
 
 const reducers = combineReducers({
     router: routerReducer

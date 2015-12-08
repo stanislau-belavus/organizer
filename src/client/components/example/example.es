@@ -1,5 +1,5 @@
 import React from 'react';
-import { currentRouteName } from '../../selectors/router_selectors';
+import { currentRouteName } from 'selectors/router_selectors';
 
 export default class ExampleComponent extends React.Component {
     render() {

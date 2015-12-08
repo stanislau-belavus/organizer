@@ -1,6 +1,6 @@
 import React from 'react';
 import { RouteHandler } from 'react-router';
-import HeaderContainer from './header/header';
+import HeaderContainer from 'components/header/header';
 
 // passing appState in general incorrect
 export default class AppContainer extends React.Component {

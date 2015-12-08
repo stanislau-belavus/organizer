@@ -1,8 +1,8 @@
 import React from 'react';
 import Router, { Route, Redirect } from 'react-router';
-import RouteNames from '../constants/route_names';
-import AppContainer from '../components/app_container';
-import ExampleComponent from '../components/example/example';
+import RouteNames from 'constants/route_names';
+import AppContainer from 'components/app_container';
+import ExampleComponent from 'components/example/example';
 
 const router = _.assign(Router.create({
     routes: (
