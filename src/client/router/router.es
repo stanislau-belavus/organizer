@@ -8,7 +8,6 @@ const router = _.assign(Router.create({
     routes: (
         <Route path='/' name={RouteNames.APP} handler={AppContainer}>
             <Route path='example' name={RouteNames.EXAMPLE_ROUTE_NAME} handler={ExampleComponent} />
-
             <Redirect from='/' to={RouteNames.EXAMPLE_ROUTE_NAME} />
         </Route>
     ),

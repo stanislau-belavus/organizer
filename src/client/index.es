@@ -4,6 +4,7 @@ import React from 'react';
 import { updateRoute } from './actions/router_actions';
 import store from './store/app_store';
 import router from './router/router';
+import './style/index.scss';
 
 (() => {
     let routeHandler = null;
