@@ -22,7 +22,7 @@ module.exports = {
 
     module: {
         loaders: [
-            { test: /\.(jsx|es)$/, loader: 'babel-loader?stage=0&optional=runtime' },
+            { test: /\.(jsx|es)$/, loader: 'babel-loader?presets[]=react,presets[]=es2015,presets[]=stage-0' },
             { test: /\.json$/, loader: 'json-loader' },
             { test: /\.json5$/, loader: 'json5-loader' },
             { test: /\.(png|jpg|jpeg|gif)$/, loader: 'url-loader?limit=10000' },

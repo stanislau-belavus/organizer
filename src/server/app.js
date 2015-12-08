@@ -30,4 +30,4 @@ if (!module.parent) {
     } catch(e) {}
 }
 
-export default app;
+module.exports = app;

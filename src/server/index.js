@@ -1,6 +1,6 @@
 'use strict';
 
-require('babel/register-without-polyfill');
+require('babel-core/register');
 
 delete process.env.BROWSER;
 
