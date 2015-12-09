@@ -1,6 +1,6 @@
 {
 	"mongo": {
-		"db": "victoria-dev",
+		"db": "organizer-dev",
 		"host": "localhost",
 		"port": 27017,
 		"options": {
@@ -11,7 +11,7 @@
 		"port": 8081
 	},
 	"app": {
-    	"title": "Victoria: local",
+    	"title": "Organizer: local",
     	"api": "/"
     }
 }

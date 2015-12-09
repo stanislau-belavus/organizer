@@ -1,13 +1,13 @@
-var path = require('path'),
-    Webpack = require('webpack'),
-    server = require('./utils/app-server');
-    ExtractTextPlugin = require("extract-text-webpack-plugin");
+var path = require('path');
+var Webpack = require('webpack');
+var server = require('./utils/app-server');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 var NODE_ENV = process.env.NODE_ENV; //variable of the scope
 
 module.exports = {
     entry: {
-        victoria: [
+        organizer: [
             'webpack-dev-server/client',
             'webpack/hot/dev-server',
             path.join(__dirname, '../src/client/')
