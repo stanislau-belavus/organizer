@@ -1,5 +1,3 @@
-Victoria project
-
 For building project use commands below.
 
 1. Install nodejs;
