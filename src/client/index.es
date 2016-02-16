@@ -1,7 +1,8 @@
 'use strict';
 
 import React from 'react';
-import { updateRoute } from 'actions/router_actions';
+import ReactDOM from 'react-dom';
+import RouteActions from 'actions/router_actions';
 import store from 'store/app_store';
 import router from 'router/router';
 import 'style/index.scss';
@@ -12,12 +13,12 @@ import 'style/index.scss';
 
     store.subscribe(() => {
         if (routeHandler != null) {
-            React.render(React.createElement(routeHandler, { appState: store.getState() }), reactDomElement);
+            ReactDOM.render(React.createElement(routeHandler, { appState: store.getState() }), reactDomElement);
         }
     });
 
     router.run((Handler, routerState) => {
         routeHandler = Handler;
-        updateRoute(routerState);
+        RouteActions.updateRoute(routerState);
     });
 })();

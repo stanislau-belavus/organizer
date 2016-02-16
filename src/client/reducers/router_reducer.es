@@ -1,20 +1,14 @@
 import Immutable from 'immutable';
 import { UPDATE_ROUTE } from '../constants/action_types/router_action_types';
+import ReducerNames from 'constants/reducer_names';
 
-const initialState = Immutable.fromJS({
-    name: '',
-    path: '',
-    params: {},
-    query: {}
-});
-
-export function routerReducer(state = initialState, action) {
-
+export default (state, action) => {
+    const currentState = state.get(ReducerNames.ROUTER);
     switch (action.type) {
         case UPDATE_ROUTE:
-            return state.merge(action.data);
+            return currentState.merge(action.data);
 
         default:
-            return state;
+            return currentState;
     }
 }

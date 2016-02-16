@@ -1,11 +1,10 @@
 import React from 'react';
+import {AppBar} from 'material-ui';
 
 export default class HeaderContainer extends React.Component {
     render() {
         return (
-            <div className="header-container">
-                header must be here
-            </div>
+            <AppBar  className="header-container" title="Notes" />
         );
     }
 }

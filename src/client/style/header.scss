@@ -1,4 +1,43 @@
 body {
 	background-color: #009688;
 	color: #E0F2F1;
+    margin: 0;
+}
+
+.note {
+    display: flex;
+    align-items: center;
+    flex-direction: columns;
+    width: 200px;
+    height: 250px;
+}
+
+.notes {
+    width: 100%;
+
+    .notes-container, .add-notes {
+        display: flex;
+        justify-content: space-around;
+        .note-title {
+            margin: 10px 0;
+            border-bottom: 1px solid #000;
+            width: 100%;
+        }
+
+        .note-body {
+            display: flex;
+            justify-content: space-around;
+            height: 190px;
+            
+            .note-text {
+                background: none;
+                border: none;
+                outline: none;
+                resize: none;
+                height: 100%;
+                width: 100%;
+                max-height: 180px;
+            }
+        }
+    }
 }

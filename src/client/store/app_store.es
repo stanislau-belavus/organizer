@@ -1,9 +1,6 @@
-import { createStore, combineReducers } from 'redux';
-import { routerReducer } from 'reducers/router_reducer';
+import { createStore } from 'redux';
+import appReducer from 'reducers/app_reducer';
 
-const reducers = combineReducers({
-    router: routerReducer
-});
-const store = createStore(reducers);
+const store = createStore(appReducer);
 
 export default store;
