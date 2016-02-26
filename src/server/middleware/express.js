@@ -4,6 +4,7 @@ import path from 'path';
 import helmet from 'helmet';
 import hpp from 'hpp';
 import bodyParser from 'body-parser';
+import apiRouter from '../routes/api';
 import staticsRouter from '../routes/statics';
 import env from '../../../env';
 
@@ -42,6 +43,7 @@ export default (app) => {
     app.use(bodyParser.json());
 
     app.use(hpp());
+    app.use('/', apiRouter);
     app.use('/', staticsRouter);
 
     app.use(errorHandler);

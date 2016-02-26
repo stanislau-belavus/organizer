@@ -1,47 +1,50 @@
 'use strict';
 
 import React from 'react';
-import {FloatingActionButton, Paper, TextField} from 'material-ui';
+import {FloatingActionButton, FlatButton, Dialog} from 'material-ui';
 import {ContentAdd} from 'material-ui/lib/svg-icons';
 import NotesActions from 'actions/notes_actions';
 import notesSelectors from 'selectors/notes_selectors';
-import configStyleNotes from 'constants/notes_colors_config';
+import Note from 'components/notes/Note.react';
 
-const noteStyle = {
-  height: 250,
-  width: 200,
-  margin: 10,
-  textAlign: 'center',
-  display: 'inline-block',
-};
-
-const noteTitleStyle = {
-    width: '100%'
-}
+const TITLE_REMOVE_DIALOG = 'Remove note';
+const REMOVE_DIALOG_MESSAGE = 'Are you sure you want to delete this note?';
 
 export default class NotesPage extends React.Component {
 
     constructor(props) {
         super(props);
+
+        this.removeNoteId = null;
+    }
+
+    componentWillMount () {
+        NotesActions.getNotes();
     }
 
     _addNote() {
         NotesActions.addNewNote();
     }
 
+    _changeRemoveNoteId(id) {
+        this.removeNoteId = id;
+        this.forceUpdate();
+    }
+
+    _removeNote() {
+        NotesActions.removeNote(this.removeNoteId);
+        this.removeNoteId = null;
+    }
+
     _renderNotes() {
         let {appState} = this.props;
         let notes = notesSelectors.getNotes(appState);
-        let notesComponent = notes.map((note, index) => {
-            let noteRandomStyle = configStyleNotes[Math.floor(Math.random()*configStyleNotes.length)];
-            let fullStyleNote = Object.assign({}, noteStyle, noteRandomStyle);
-            let {title, body} = note;
-            return <Paper className="note" style={fullStyleNote} key={index} zDepth={2} rounded={false} >
-                <TextField className="note-title" style={noteTitleStyle} defaultValue={title} underlineShow={false} />
-                <div className="note-body">
-                    <textarea className="note-text" defaultValue={body} multiLine={true}/>
-                </div>
-            </Paper>
+        let notesComponent = notes.map((note) => {
+            return ( <Note note={note} 
+                key={note.id} 
+                changeRemoveNoteId={this._changeRemoveNoteId.bind(this, note.id)}
+                /> 
+            );
         });
 
         return <div className="notes-container">
@@ -53,8 +56,30 @@ export default class NotesPage extends React.Component {
 
     render() {
         let renderedNotes = this._renderNotes();
-        console.log(this.props.appState.toJS());
-        return (<div className="notes">
+        let actions = [
+            <FlatButton
+                label="Cancel"
+                secondary={true}
+                onClick={this._changeRemoveNoteId.bind(this, null)}
+            />,
+            <FlatButton
+                label="Submit"
+                primary={true}
+                keyboardFocused={true}
+                onClick={this._removeNote.bind(this)}
+            />
+        ];
+
+        return (
+            <div className="notes">
+                <Dialog
+                      title={TITLE_REMOVE_DIALOG}
+                      actions={actions}
+                      modal={true}
+                      open={!!this.removeNoteId}
+                    >
+                    {REMOVE_DIALOG_MESSAGE}
+                </Dialog>
                 {renderedNotes}
                 <div className="add-notes">
                     <FloatingActionButton onClick={this._addNote}>

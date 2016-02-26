@@ -1,16 +1,25 @@
 body {
 	background-color: #009688;
-	color: #E0F2F1;
+	// color: #E0F2F1;
     margin: 0;
 }
 
-.note {
-    display: flex;
-    align-items: center;
-    flex-direction: columns;
-    width: 200px;
-    height: 250px;
+.drop-target {
+    border: 4px dashed #FFF;
 }
+
+.notes-shell {
+    display: inline-block;
+
+    .note {
+        display: flex;
+        align-items: center;
+        flex-direction: columns;
+        width: 200px;
+        height: 250px;
+    }   
+}
+
 
 .notes {
     width: 100%;

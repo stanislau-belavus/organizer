@@ -21,15 +21,21 @@ module.exports = {
     },
 
     module: {
-        loaders: [
-            { test: /\.(jsx|es)$/, loader: 'babel-loader?presets[]=react,presets[]=es2015,presets[]=stage-0' },
+        loaders: [{ test: /\.html/, loader: 'html-loader' },
+            {loader: "babel-loader",
+                    test: /\.(jsx|es)$/,
+                    query: {
+                        plugins: ['transform-runtime', 'transform-decorators-legacy'],
+                        presets: ['es2015', 'stage-0', 'react'],
+                    }
+            },
+            //{ test: /\.(jsx|es)$/, loader: 'babel-loader?presets[]=react,presets[]=es2015,presets[]=stage-0' },
             { test: /\.json$/, loader: 'json-loader' },
             { test: /\.json5$/, loader: 'json5-loader' },
             { test: /\.(png|jpg|jpeg|gif)$/, loader: 'url-loader?limit=10000' },
             { test: /\.(woff|woff2)$/, loader: 'url-loader?limit=100000' },
             { test: /\.(ttf|eot|wav|mp3|svg|eot|woff|woff2)$/, loader: 'file?name=[name].[ext][hash]' },
             { test: /\.(wav|mp3)$/, loader: 'file-loader' },
-            { test: /\.html/, loader: 'html-loader' },
             { test: /\.(sass|scss)$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader?minimize!sass-loader') },
             { test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader?minimize') }
        ]
