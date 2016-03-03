@@ -2,15 +2,22 @@
 
 import React from 'react';
 import {Paper, TextField, IconButton, Dialog} from 'material-ui';
-import {ContentClear} from 'material-ui/lib/svg-icons';
+import {ContentClear, EditorModeEdit} from 'material-ui/lib/svg-icons';
 import { DragSource, DropTarget } from 'react-dnd';
 import DndTypes from 'constants/dnd_types';
 import NotesActions from 'actions/notes_actions';
+import MenuNote from 'components/notes/MenuNote.react';
 
 const dragStyle = {
   height: '10px',
   width: '100%'
 };
+
+const iconStyle = {
+    width: '36px',
+    height: '36px',
+    padding: '8px'
+}
 
 const noteStyle = {
   margin: 10,
@@ -57,7 +64,7 @@ export default class Note extends React.Component {
     }
 
     render() {
-        const { isDragging, connectDragSource, connectDropTarget, note, changeRemoveNoteId, isOverNote, canDropNote } = this.props;
+        const { isDragging, connectDragSource, connectDropTarget, note, changeRemoveNoteId, changeEditNode, isOverNote, canDropNote } = this.props;
         const classNameIsCanDrop = isOverNote && canDropNote ? 'drop-target' : '';
         let fullStyleNote = Object.assign({}, noteStyle, note.style, 
             isDragging ? {opacity: 0.5} : {});
@@ -66,13 +73,25 @@ export default class Note extends React.Component {
             <div className={'notes-shell '+ classNameIsCanDrop}>
                 <Paper className='note' style={fullStyleNote} zDepth={2} rounded={false} >
                     <Paper style={dragStyle}></Paper>
-                    <TextField className="note-title" style={noteTitleStyle} defaultValue={title} underlineShow={false} />
-                    <div className="note-body">
-                        <textarea className="note-text" defaultValue={body} multiLine={true}/>
+                    <div className='note-title'>
+                        {title}
+                        <div>
+                            {<IconButton style={iconStyle} onClick={changeEditNode}>
+                                <EditorModeEdit />
+                            </IconButton>}
+                            {<IconButton style={iconStyle} onClick={changeRemoveNoteId}>
+                                <ContentClear />
+                            </IconButton>}
+                        </div>
+                        {/*<TextField className="note-title" style={noteTitleStyle} disabled={true} defaultValue={title} underlineShow={false} />*/}
+                       {/*<MenuNote noteId={this.props.note.id} />*/}
                     </div>
-                    <IconButton onClick={changeRemoveNoteId}>
-                        <ContentClear />
-                    </IconButton>
+                    <div className="note-body">
+                        <textarea readOnly={true} className="note-text" value={body} multiLine={true}/>
+                    </div>
+                    {/*<IconButton onClick={changeRemoveNoteId}>
+                                            <ContentClear />
+                                        </IconButton>*/}
                 </Paper>
             </div>  
         ));

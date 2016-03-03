@@ -20,6 +20,13 @@ body {
     }   
 }
 
+.container {
+    display: flex;
+
+    .list {
+        width: 200px;
+    }
+}
 
 .notes {
     width: 100%;
@@ -28,9 +35,10 @@ body {
         display: flex;
         justify-content: space-around;
         .note-title {
-            margin: 10px 0;
             border-bottom: 1px solid #000;
-            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
         }
 
         .note-body {

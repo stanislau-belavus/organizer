@@ -33,9 +33,23 @@ const removeNote = (id) => {
     }, () => {});
 };
 
+const updateNote = (note) => {
+    request.post('notes/update', { note }).then((response) => {
+        getNotes();
+    }, () => {});
+};
+
+const undoNotes = (note) => {
+    request.post('notes/undo', {}).then((response) => {
+        getNotes();
+    }, () => {});
+};
+
 export default {
     addNewNote,
     getNotes,
     removeNote,
-    updateOrder
+    updateOrder,
+    updateNote,
+    undoNotes
 };

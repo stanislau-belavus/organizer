@@ -2,6 +2,7 @@
 
 import mongoose from 'mongoose';
 import async from 'async';
+import _ from 'lodash';
 
 const Schema = mongoose.Schema;
 
@@ -9,7 +10,9 @@ let NoteSchema = new Schema({
     title: { type: String, required: true, default: 'Note title' },
     body: { type: String, required: true, default: 'Note body' },
     style: { type: Object, required: true, default: {} },
-    position: { type: Number, required: true, default: 0 }
+    removed: { type: Boolean, required: true, default: false},
+    position: { type: Number, required: true, default: 0 },
+    tag: { type: String, default: '' }
 });
 
 NoteSchema.set('toObject', { virtuals: true });
@@ -28,7 +31,7 @@ NoteSchema.statics.getLastPosition = function (condition={}) {
     });
 };
 
-NoteSchema.statics.getAll = function (condition = {}) {
+NoteSchema.statics.getAll = function (condition = { removed: false }) {
     return new Promise((resolve, reject) => {
         this.find(condition).sort('position').exec((error, data) => {
             if (!error) {
@@ -40,16 +43,35 @@ NoteSchema.statics.getAll = function (condition = {}) {
     });
 };
 
-NoteSchema.statics.removeNote = function (condition = {}) {
+NoteSchema.statics.removeNote = function (condition={}) {
     return new Promise((resolve, reject) => {
-        this.remove(condition, (error, data) => {
+        async.waterfall([(cb) => {
+            this.findOne(condition).exec(cb);
+        },
+        (removedNote, cb) => {
+            if(removedNote) {
+                removedNote.removed = true;
+                removedNote.save(() => {
+                    cb(null);
+                });
+            }
+        }], (error) => {
             if (!error) {
-                resolve(data);
+                resolve();
             } else {
                 reject(error);
             }
-        });
+        })
     });
+    // return new Promise((resolve, reject) => {
+    //     this.remove(condition, (error, data) => {
+    //         if (!error) {
+    //             resolve(data);
+    //         } else {
+    //             reject(error);
+    //         }
+    //     });
+    // });
 };
 
 NoteSchema.statics.createNewNote = function (data = {}) {
@@ -65,6 +87,51 @@ NoteSchema.statics.createNewNote = function (data = {}) {
     });
 };
 
+NoteSchema.statics.updateNote = function (note) {
+    return new Promise((resolve, reject) => {
+        async.waterfall([(cb) => {
+            this.findOne({ _id: note.id }).exec(cb);
+        },
+        (updateNote, cb) => {
+            if(updateNote) {
+                updateNote = _.assign(updateNote, note);
+                updateNote.save(() => {
+                    cb(null);
+                });
+            }
+        }], (error) => {
+            if (!error) {
+                resolve();
+            } else {
+                reject(error);
+            }
+        })
+    });
+};
+
+NoteSchema.statics.undoNotes = function (note) {
+    return new Promise((resolve, reject) => {
+        async.waterfall([(cb) => {
+            this.find({ removed: true }, cb);
+        },
+        (removedNotes, cb) => {
+            if(removedNotes) {
+                async.eachSeries(removedNotes, (note, cbk) => {
+                    note.removed = false;
+                    note.save(() => {
+                        cbk(null);
+                    });
+                }, cb);
+            }
+        }], (error) => {
+            if (!error) {
+                resolve();
+            } else {
+                reject(error);
+            }
+        })
+    });
+};
 NoteSchema.statics.updateOrder = function (dropNote, dragNote) {
     return new Promise((resolve, reject) => {
         async.waterfall([(cb) => {
@@ -83,7 +150,6 @@ NoteSchema.statics.updateOrder = function (dropNote, dragNote) {
         },
         (note, cb) => {
             if(note) {
-                console.log('\n------\n', dragNote.position, dropNote.position, '\n-------\n');
                 note.position = dragNote.position;
                 note.save(() => { cb(null); });
             }

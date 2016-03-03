@@ -49,9 +49,30 @@ const updateOrder = (request, response) => {
     });
 };
 
+const updateNote = (request, response) => {
+    let {body} = request;
+    let {note} = body;
+
+    NotesModel.updateNote(note).then(() => {
+        response.json({
+            status: 'ok'
+        });
+    });
+};
+
+const undoNotes = (request, response) => {
+    NotesModel.undoNotes().then(() => {
+        response.json({
+            status: 'ok'
+        });
+    });
+};
+
 export default { 
     createNewNote,
     getNotes,
     removeNote,
-    updateOrder
+    updateOrder,
+    updateNote,
+    undoNotes
 }
