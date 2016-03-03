@@ -112,16 +112,14 @@ NoteSchema.statics.updateNote = function (note) {
 NoteSchema.statics.undoNotes = function (note) {
     return new Promise((resolve, reject) => {
         async.waterfall([(cb) => {
-            this.find({ removed: true }, cb);
+            this.findOne({ removed: true }).sort('-updatedAt').exec(cb);
         },
-        (removedNotes, cb) => {
-            if(removedNotes) {
-                async.eachSeries(removedNotes, (note, cbk) => {
-                    note.removed = false;
-                    note.save(() => {
-                        cbk(null);
-                    });
-                }, cb);
+        (removedNote, cb) => {
+            if(removedNote) {
+                removedNote.removed = false;
+                removedNote.save(() => {
+                    cb(null);
+                });
             }
         }], (error) => {
             if (!error) {
@@ -162,5 +160,7 @@ NoteSchema.statics.updateOrder = function (dropNote, dragNote) {
         })
     });
 };
+
+NoteSchema.plugin(require('mongoose-timestamp'));
 
 export default mongoose.model('Note', NoteSchema);
