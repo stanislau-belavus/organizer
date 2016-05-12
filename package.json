@@ -5,7 +5,11 @@
   "main": "index.html",
   "scripts": {
     "start": "node ./webpack.js",
+    "auto": "node ./autotest.js",
     "add-db": "node ./src/server/init_database.js",
+    "integration": "mocha --timeout 3000 -c --require=\"./resources/mocha-inject.js\" --compilers js:babel-core/register \"src/**/__integration__/**/*.spec.js\"",
+    "module": "mocha --timeout 3000 -c --require=\"./resources/mocha-inject.js\" --compilers js:babel-core/register \"src/**/__tests__/**/*.spec.js\"",
+    "tests": "npm run module && npm run integration",
     "build": "./node_modules/.bin/webpack --config ./webpack/webpack.config.js",
     "clean": "rm -r ./client/build"
   },
@@ -33,6 +37,7 @@
     "eslint": "^0.22.0",
     "eslint-plugin-react": "^2.2.0",
     "express": "^4.13.1",
+    "express-session": "^1.13.0",
     "extract-text-webpack-plugin": "^0.8.2",
     "file-loader": "^0.8.4",
     "html-loader": "^0.4.3",
@@ -47,6 +52,8 @@
     "node-watch": "0.3.4",
     "nskeymirror": "^0.1.2",
     "opener": "1.4.1",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
     "react": "^0.14.0",
     "react-dnd": "2.0.2",
     "react-dnd-html5-backend": "^2.1.2",

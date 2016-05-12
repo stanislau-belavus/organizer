@@ -7,6 +7,9 @@ import bodyParser from 'body-parser';
 import apiRouter from '../routes/api';
 import staticsRouter from '../routes/statics';
 import env from '../../../env';
+import passport from 'passport';
+import Account from '../models/account';
+import { Strategy as LocalStrategy } from 'passport-local';
 
 const errorHandler = (err, req, res, next) => {
     let errData = err.message ? err.message : err;
@@ -45,6 +48,35 @@ export default (app) => {
     app.use(hpp());
     app.use('/', apiRouter);
     app.use('/', staticsRouter);
+
+    //Config passport
+    //-----------------------
+    app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
+    app.use(passport.initialize());
+    app.use(passport.session());
+    
+    passport.use(new LocalStrategy(
+        (username, password, callback) => {
+            console.log('UUUUU --- ', username, password);
+            Account.findOne({ username: username }, function (err, account) {
+                if (err) { return callback(err); }
+                if (!account) { return callback(null, false); }
+                if (!account.verifyPassword(password)) { return callback(null, false); }
+                console.log('SUCCESS --- ', username, password);
+                return callback(null, account);
+            });
+        }
+    ));
+    passport.serializeUser(function(account, done) {
+        done(null, account.id);
+    });
+
+    passport.deserializeUser(function(id, done) {
+        User.findById(id, function (err, account) {
+            done(err, account);
+        });
+    });
+    //-----------------------
 
     app.use(errorHandler);
 

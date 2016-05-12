@@ -7,3 +7,11 @@ For building project use commands below.
 3. cd organizer;
 4. npm install;
 5. npm run start;
+
+
+--------------------------
+Protractor
+
+1 npm install -g protractor
+2 webdriver-manager update
+3 webdriver-manager start

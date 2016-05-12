@@ -12,7 +12,8 @@ let NoteSchema = new Schema({
     style: { type: Object, required: true, default: {} },
     removed: { type: Boolean, required: true, default: false},
     position: { type: Number, required: true, default: 0 },
-    tag: { type: String, default: '' }
+    tag: { type: String, default: '' },
+    accountRef: { type: Schema.Types.ObjectId, ref: 'Account'/*, required: true*/ },
 });
 
 NoteSchema.set('toObject', { virtuals: true });
@@ -20,7 +21,9 @@ NoteSchema.set('toJSON', { virtuals: true });
 
 NoteSchema.statics.getLastPosition = function (condition={}) {
     return new Promise((resolve) => {
+        console.log('LAST POSITION \n');
         this.find(condition, (error, notes) => {
+            console.log('NOTE --  \n', notes);
             if(error) {
                 resolve(0);
             }
@@ -81,6 +84,7 @@ NoteSchema.statics.createNewNote = function (data = {}) {
             if (!error) {
                 resolve(data);
             } else {
+                console.log('ERROR - ', error);
                 reject(error);
             }
         });
