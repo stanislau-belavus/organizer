@@ -1,4 +1,5 @@
 export default {
     NOTES: 'notes',
-    ROUTER: 'router'
+    ROUTER: 'router',
+    AUTHORIZATION: 'authorization'
 };

@@ -3,6 +3,8 @@ import { RouteHandler } from 'react-router';
 import HeaderContainer from 'components/header/header';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
 
 // passing appState in general incorrect
 @DragDropContext(HTML5Backend)

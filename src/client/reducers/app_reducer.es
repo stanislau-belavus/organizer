@@ -2,13 +2,15 @@
 
 import Immutable from 'immutable';
 import routerReducer from 'reducers/router_reducer';
+import authorizationReducer from 'reducers/authorization_reducer';
 import notesReducer from 'reducers/notes_reducer';
 import ReducerNames from 'constants/reducer_names';
 import RouterNames from 'constants/route_names';
 
 const reducers = {
     [ReducerNames.ROUTER]: routerReducer,
-    [ReducerNames.NOTES]: notesReducer
+    [ReducerNames.NOTES]: notesReducer,
+    [ReducerNames.AUTHORIZATION]: authorizationReducer
 };
 
 const initialState = Immutable.fromJS({
@@ -19,6 +21,8 @@ const initialState = Immutable.fromJS({
         query: {}
     }, [ReducerNames.NOTES]: {
         notes: []
+    },  [ReducerNames.AUTHORIZATION]: {
+        userId: null
     }
 });
 
