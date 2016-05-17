@@ -6,6 +6,6 @@ const getUserId = (state) => {
     return state.getIn([ReducerNames.AUTHORIZATION, 'userId']);
 };
 
-export default {
+export {
     getUserId
-}
+};

@@ -10,5 +10,5 @@
 // import { createSelector } from 'reselect';
 
 export function currentRouteName(state) {
-    return state.router.get('name');
+    return 'example';
 }
