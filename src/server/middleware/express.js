@@ -57,12 +57,11 @@ export default (app) => {
     
     passport.use(new LocalStrategy(
         (username, password, callback) => {
-            console.log('UUUUU --- ', username, password);
             Account.findOne({ username: username }, function (err, account) {
                 if (err) { return callback(err); }
                 if (!account) { return callback(null, false); }
                 if (!account.verifyPassword(password)) { return callback(null, false); }
-                console.log('SUCCESS --- ', username, password);
+
                 return callback(null, account);
             });
         }

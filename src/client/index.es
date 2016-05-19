@@ -7,12 +7,13 @@ import store from 'store/app_store';
 import router from 'router/router';
 import 'style/index.scss';
 
+let routeHandler = null;
+
 (() => {
-    let routeHandler = null;
     const reactDomElement = document.getElementById('react-container');
 
     store.subscribe(() => {
-        if (routeHandler != null) {
+        if (routeHandler !== null) {
             ReactDOM.render(React.createElement(routeHandler, { appState: store.getState() }), reactDomElement);
         }
     });

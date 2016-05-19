@@ -79,7 +79,6 @@ export default class NotesPage extends React.Component {
 
     _generateList() {
         let {appState} = this.props;
-        console.log(Object.keys);
         let list = {};
         let notes = notesSelectors.getNotes(appState);
         notes.forEach((note) => {

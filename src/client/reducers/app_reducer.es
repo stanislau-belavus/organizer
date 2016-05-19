@@ -22,7 +22,9 @@ const initialState = Immutable.fromJS({
     }, [ReducerNames.NOTES]: {
         notes: []
     },  [ReducerNames.AUTHORIZATION]: {
-        userId: null
+        userId: null,
+        username: null,
+        errorMsg: null
     }
 });
 

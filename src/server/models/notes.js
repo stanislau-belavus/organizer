@@ -21,9 +21,7 @@ NoteSchema.set('toJSON', { virtuals: true });
 
 NoteSchema.statics.getLastPosition = function (condition={}) {
     return new Promise((resolve) => {
-        console.log('LAST POSITION \n');
         this.find(condition, (error, notes) => {
-            console.log('NOTE --  \n', notes);
             if(error) {
                 resolve(0);
             }

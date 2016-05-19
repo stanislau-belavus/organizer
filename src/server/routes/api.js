@@ -14,7 +14,8 @@ router.post('/notes/create', notesCtrl.createNewNote)
     .post('/notes/undo', notesCtrl.undoNotes)
     .get('/notes/getNotes', notesCtrl.getNotes);
 
-router.post('/authorization/login', passport.authenticate('local', { failureRedirect: '/login', failureFlash: 'Account not login' }), authCtrl.login)
+router.post('/authorization/login', authCtrl.login)
+/*.post('/authorization/login', passport.authenticate('local', { failureRedirect: '/login', failureFlash: 'Account not login' }, authCtrl.login))*/
     .post('/authorization/register', authCtrl.register)
     .get('/login', (req, res, err) => { console.log('BODY', req.query ); });
 
